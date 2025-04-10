@@ -1,29 +1,38 @@
-name: Flutter Basic CI
+name: Flutter CI
 
 on:
   push:
-    branches: [main]
+    branches: [main] # Trigger on pushes to main branch
   pull_request:
-    branches: [main]
+    branches: [main] # Trigger on pull requests to main branch
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Running on the latest Ubuntu
 
     steps:
-    - name: Checkout source
+    # Checkout the repository
+    - name: Checkout source code
       uses: actions/checkout@v3
 
+    # Set up Flutter
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.22.1' # ✅ Make sure Dart SDK >= 3.7.0
+        flutter-version: '3.29.0' # Match your local Flutter version
 
+    # Install dependencies
     - name: Install dependencies
       run: flutter pub get
 
+    # Analyze the code
     - name: Analyze code
       run: flutter analyze
 
+    # Run tests
     - name: Run tests
       run: flutter test
+
+    # Optionally, you can add APK build here
+    # - name: Build APK
+    #   run: flutter build apk --release
